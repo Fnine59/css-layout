@@ -3,7 +3,7 @@ css布局方式
 
 ## 前言
 
-在学习Flex布局实例时，无意中发现阮一峰老师给出了“圣杯布局”的Flex实现方式，出于好奇查了一下，这就有了这篇文章（据说双飞翼布局是阿里笔试题）。
+在学习[Flex布局实例](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)时，无意中发现阮一峰老师给出了“圣杯布局”的Flex实现方式，出于好奇查了一下，这就引出了这篇文章（据说双飞翼布局是阿里笔试题）。
 
 ## 圣杯布局
 
@@ -335,6 +335,123 @@ css布局方式
 ![双飞翼-副列过宽](http://4picture.test.upcdn.net/superbed/2019/03/20/5c91e2cb3a213b0417c80f9b.jpg)
 
 以上就是两种常见的布局~
+
+## 圣杯布局的Flex实现方式
+
+前言里提到过，之所以有了这篇文章是在练习阮一峰老师的Flex布局实例时顺藤摸瓜发现的。绕了这么一大圈，回到最初的问题上，如何使用Flex布局实现一个圣杯布局？
+
+先不看答案，自己动手试试。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Flex实现圣杯布局</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.header	{
+			background-color: #cccccc;
+		}
+		.footer {
+			background-color: #cccccc;
+		}
+		.container {
+			display: flex;
+		}
+		.main {
+			background-color: red;
+			flex: 1;
+		}
+		.left {
+			background-color: green;
+			flex-basis: 200px;
+			order: -1;
+		}
+		.right {
+			background-color: blue;
+			flex-basis: 200px;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">#header</div>
+	<div class="container">
+		<div class="main">
+			我是主列，我的内容要优先渲染我是主列，我的内容要优先渲染我是主列，我的内容要优先渲染我是主列，我的内容要优先渲染我是主列，我的内容要优先渲染
+		</div>
+		<div class="left">我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列</div>
+		<div class="right">我是右侧扩展列我是右侧扩展列我是右侧扩展列我是右侧扩展列我是右侧扩展列我是右侧扩展列</div>
+	</div>
+	<div class="footer">#footer</div>
+</body>
+</html>
+```
+
+上面的代码实现出的效果如下图。
+
+![flex实现效果](http://4picture.test.upcdn.net/superbed/2019/03/20/5c91eb843a213b0417c86a68.jpg)
+
+来看最终答案。
+
+```html
+<body class="HolyGrail">
+  <header>...</header>
+  <div class="HolyGrail-body">
+    <main class="HolyGrail-content">...</main>
+    <nav class="HolyGrail-nav">...</nav>
+    <aside class="HolyGrail-ads">...</aside>
+  </div>
+  <footer>...</footer>
+</body>
+```
+
+```css
+.HolyGrail {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+header,
+footer {
+  flex: 1;
+}
+
+.HolyGrail-body {
+  display: flex;
+  flex: 1;
+}
+
+.HolyGrail-content {
+  flex: 1;
+}
+
+.HolyGrail-nav, .HolyGrail-ads {
+  /* 两个边栏的宽度设为12em */
+  flex: 0 0 12em;
+}
+
+.HolyGrail-nav {
+  /* 导航放到最左边 */
+  order: -1;
+}
+```
+
+好吧，果然还是有差距的。
+
+我们自己的实现方式中有哪些可优化的点和不足之处呢？
+
+首先是，圣杯布局规定左右两列一定是定宽，但我们的视线中，只为左右两列添加`flex-basis: 200px;`这一个属性，意思是左右两列在主轴上计算占有空间及进行缩放时依据的基础宽度是200px，但是，`flex-shrink`属性的默认值是1，也就是说，当主轴空间不足时，默认会缩放这两列。而使用`flex: 0 0 200px;`，不仅便于浏览器计算，而且能够保证这两列不会被缩放。
+
+> 补充一点，上边说的主轴空间不足时缩放左右两列的情况，只会在左右两列宽度很宽的时候出现。
+
+其次是，我们没有在外层使用Flex布局，因此其高度是由文本高度决定的。可以将整个body设置为Flex布局，设置最小高度为100vh，然后分别设置`header`、`container`、`footer`的flex属性（阮一峰老师的案例中简单的给了三个1，我们可以根据自己的需要调整高度），这样能够实现该布局占满整个浏览器窗口，而内容过长时又可以竖向滚动的效果。
+
+以上就是如何使用Flex布局实现圣杯布局~
 
 ## 参考文章
 

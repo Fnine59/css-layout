@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Flex实现圣杯布局</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.header	{
+			background-color: #cccccc;
+		}
+		.footer {
+			background-color: #cccccc;
+		}
+		.container {
+			display: flex;
+		}
+		.main {
+			background-color: red;
+			flex: 1;
+		}
+		.left {
+			background-color: green;
+			flex: 0 0 200px;
+			order: -1;
+		}
+		.right {
+			background-color: blue;
+			flex: 0 0 200px;
+		}
+	</style>
+</head>
+<body>
+	<div class="header">#header</div>
+	<div class="container">
+		<div class="main">
+			我是主列，我的内容要优先渲染我是主列，我的内容要优先渲染我是主列，我的内容要优先渲染我是主列，我的内容要优先渲染我是主列，我的内容要优先渲染
+		</div>
+		<div class="left">我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列我是左侧副列</div>
+		<div class="right">我是右侧扩展列我是右侧扩展列我是右侧扩展列我是右侧扩展列我是右侧扩展列我是右侧扩展列</div>
+	</div>
+	<div class="footer">#footer</div>
+</body>
+</html>
