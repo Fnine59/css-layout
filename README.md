@@ -451,6 +451,23 @@ footer {
 
 其次是，我们没有在外层使用Flex布局，因此其高度是由文本高度决定的。可以将整个body设置为Flex布局，设置最小高度为100vh，然后分别设置`header`、`container`、`footer`的flex属性（阮一峰老师的案例中简单的给了三个1，我们可以根据自己的需要调整高度），这样能够实现该布局占满整个浏览器窗口，而内容过长时又可以竖向滚动的效果。
 
+除此之外，阮一峰老师的案例中还考虑到了对小屏的兼容性。代码如下：
+
+```css
+/* 如果是小屏幕，躯干的三栏自动变为垂直叠加 */
+@media (max-width: 768px) {
+  .HolyGrail-body {
+    flex-direction: column;
+    flex: 1;
+  }
+  .HolyGrail-nav,
+  .HolyGrail-ads,
+  .HolyGrail-content {
+    flex: auto;
+  }
+}
+```
+
 以上就是如何使用Flex布局实现圣杯布局~
 
 ## 参考文章
