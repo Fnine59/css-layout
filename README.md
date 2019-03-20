@@ -395,6 +395,8 @@ css布局方式
 
 ![flex实现效果](http://4picture.test.upcdn.net/superbed/2019/03/20/5c91eb843a213b0417c86a68.jpg)
 
+受益于Flex布局中`align-items`属性默认值为`stretch`，之前两种实现方式中很难达到的三列高度充满整个`container`也一下子做到了，Flex布局还是十分便捷的。
+
 来看最终答案。
 
 ```html
